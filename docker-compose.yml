@@ -6,15 +6,27 @@ services:
       context: ./nextjs
       dockerfile: Dockerfile
     ports:
-      - "5090:5090"
+      - "3000:3000"
     volumes:
       - ./nextjs:/src/app
       - /app/node_modules
+    env_file:
+      - ./.env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
     depends_on:
-      - postgres
-    command: npm run dev
+      postgres:
+        condition: service_healthy
+    command: sh -c "
+      while ! nc -z postgres 5432; do
+      echo 'Waiting for PostgreSQL to start...';
+      sleep 1;
+      done;
+      npx prisma generate &&
+      npx prisma migrate deploy &&
+      npx prisma db push &&
+      npm run dev
+      "
 
   postgres:
     image: postgres:13
@@ -22,8 +34,10 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - ./.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
