@@ -1,23 +1,51 @@
 "use client";
 
-import { Course } from "@prisma/client";
+import { Course, Chapter } from "@prisma/client";
+import styles from "@/styles/CourseList.module.css";
+import { getYoutubeThumbnail } from "@/data/youtube";
+import { useRouter } from "next/navigation";
+
+type CourseWithFirstChapter = Course & {
+  chapters: Chapter[];
+};
 
 type CourseListProps = {
-  courses: Course[];
+  courses: CourseWithFirstChapter[];
 };
 
 export default function CourseList({ courses }: CourseListProps) {
+  const router = useRouter();
+
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/courses/${courseId}`);
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className={styles.grid}>
       {courses.map((course) => (
-        <div key={course.id} className="border p-4 rounded">
+        <div
+          key={course.id}
+          className={styles.card}
+          onClick={() => handleCourseClick(course.id)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              handleCourseClick(course.id);
+            }
+          }}
+        >
           <img
-            src={course.thumbnail}
+            src={getYoutubeThumbnail(
+              course.isSingleVideo
+                ? course.videoId!
+                : course.chapters[0].videoId
+            )}
             alt={course.title}
-            className="w-full h-40 object-cover mb-2"
+            className={styles.cardImage}
           />
-          <h2 className="text-lg font-semibold">{course.title}</h2>
-          <p>{course.description}</p>
+          <h2 className={styles.cardTitle}>{course.title}</h2>
+          <p className={styles.cardDescription}>{course.description}</p>
         </div>
       ))}
     </div>
