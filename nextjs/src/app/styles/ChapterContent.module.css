@@ -2,6 +2,8 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+  padding-top: 60px;
+  flex-direction: column;
 }
 
 .header {
@@ -9,6 +11,7 @@
   top: 0;
   left: 0;
   right: 0;
+  height: 60px;
   background: transparent;
   padding: 20px;
 }
@@ -22,7 +25,25 @@
 }
 
 .content {
-  margin-top: 80px; /* 헤더와 콘텐츠 사이 여백 증가 */
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  position: relative; /* 추가 */
+}
+
+@media (min-width: 768px) {
+  .content {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    max-width: 70%;
+  }
 }
 
 .youtubeContainer {
@@ -40,12 +61,14 @@
   backdrop-filter: blur(5px);
   border-radius: 8px;
   padding: 20px;
+  overflow-y: auto;
   margin-bottom: 20px;
 }
 
 .sentence {
   font-size: 18px;
   margin-bottom: 10px;
+  word-wrap: break-word;
 }
 
 .divider {
@@ -56,6 +79,7 @@
 .transcript {
   font-style: italic;
   color: #666;
+  word-wrap: break-word;
 }
 
 .repeatCount {
@@ -66,7 +90,7 @@
 
 .recordButton {
   display: block;
-  width: 200px; /* 버튼 너비 조정 */
+  width: 200px; /* 버튼 너비 조 */
   margin: 0 auto; /* 버튼 중앙 정렬 */
   padding: 10px;
   background-color: #3498db;
@@ -78,10 +102,199 @@
   transition: background-color 0.3s;
 }
 
-.recordButton:hover {
-  background-color: #2980b9;
-}
-
 .recordingButton {
   background-color: #e74c3c;
+}
+
+.recordingButton:hover {
+  background-color: #c0392b;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.backButton {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+}
+
+.courseTitle {
+  font-size: 28px;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.chapterContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 60px; /* 추가: 양쪽에 패딩을 주어 화살표와의 거리를 벌립니다 */
+}
+
+.youtubeContainer {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.chapterTitle {
+  font-size: 24px;
+  margin-bottom: 15px;
+  align-self: flex-start;
+}
+
+.sentenceBox {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.sentence {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
+
+.transcript {
+  font-size: 18px;
+}
+
+.repeatCount {
+  font-size: 18px;
+  margin-bottom: 15px;
+  align-self: flex-start;
+}
+
+.recordButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.recordButton {
+  font-size: 20px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+.recordButton.recording {
+  background-color: #dc3545;
+}
+
+.navigationButtonWrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-80%);
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigationButtonWrapper:first-child {
+  left: 0;
+}
+
+.navigationButtonWrapper:last-child {
+  right: 0;
+}
+
+.navigationButtons {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.navigationButtons.invisible {
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    padding: 10px;
+  }
+
+  .header {
+    height: 80px;
+  }
+
+  .backButton {
+    font-size: 24px;
+  }
+
+  .courseTitle {
+    font-size: 24px;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .chapterContent {
+    width: 100%;
+    padding: 0; /* 모바일에서는 패딩을 제거합니다 */
+  }
+
+  .youtubeContainer {
+    margin-bottom: 15px;
+  }
+
+  .chapterTitle {
+    font-size: 22px;
+  }
+
+  .sentence {
+    font-size: 18px;
+  }
+
+  .transcript {
+    font-size: 16px;
+  }
+
+  .repeatCount {
+    font-size: 16px;
+  }
+
+  .recordButton {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+
+  .navigationButtonWrapper {
+    display: none;
+  }
 }

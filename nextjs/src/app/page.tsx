@@ -20,6 +20,14 @@ export default async function HomePage() {
         },
         take: 1,
       },
+      userCourseProgresses: {
+        where: {
+          userId: session.user.id,
+        },
+        include: {
+          chapterProgresses: true,
+        },
+      },
     },
   });
 
