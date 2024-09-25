@@ -17,8 +17,8 @@ export async function GET(req: Request) {
     const userCourseProgress = await prisma.userCourseProgress.findUnique({
       where: {
         userId_courseId: {
-          userId,
-          courseId,
+          userId: String(userId),
+          courseId: String(courseId),
         },
       },
       include: {

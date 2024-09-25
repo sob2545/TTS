@@ -50,6 +50,7 @@ model Course {
   updatedAt   DateTime @updatedAt
   chapters    Chapter[]
   userCourseProgresses UserCourseProgress[]
+  maxRepeats  Int[]
 }
 
 model Chapter {
@@ -59,6 +60,7 @@ model Chapter {
   chapterNumber Int
   videoId       String?
   startTime     Int
+  endTime       Int?
   sentence      String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

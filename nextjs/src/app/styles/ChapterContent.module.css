@@ -117,6 +117,7 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 .header {
@@ -149,7 +150,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding: 0 60px; /* 추가: 양쪽에 패딩을 주어 화살표와의 거리를 벌립니다 */
+  padding: 0 60px; /* 추가: 양쪽에 패��을 주어 화살표와의 거리를 벌립니다 */
 }
 
 .youtubeContainer {
@@ -296,5 +297,33 @@
 
   .navigationButtonWrapper {
     display: none;
+  }
+}
+
+.congratsAnimation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 24px;
+  animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
